@@ -1,0 +1,8 @@
+cradle:
+  cabal:
+    - path: "./src"
+      component: "lib:smalltt"
+    - path: "./app"
+      component: "exe:smalltt"
+    - path: "./dynamic-array"
+      component: "lib:dynamic-array"

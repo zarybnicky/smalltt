@@ -27,8 +27,8 @@ module Data.Array.Dynamic.Unlifted (
 
 import qualified Data.Primitive.PrimArray     as PA
 
-import           Data.Primitive.UnliftedArray (PrimUnlifted, MutableUnliftedArray)
-import qualified Data.Primitive.UnliftedArray as UA
+import           Data.Primitive.Unlifted.Array (PrimUnlifted, MutableUnliftedArray)
+import qualified Data.Primitive.Unlifted.Array as UA
 
 import GHC.Prim
 

@@ -58,3 +58,4 @@ library:
   dependencies:
     - ghc-prim
     - primitive
+    - primitive-unlifted
