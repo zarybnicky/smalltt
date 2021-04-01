@@ -57,7 +57,6 @@ library:
       src
   dependencies:
     - containers
-    - dynamic-array
     - ghc-prim
     - megaparsec
     - mtl
@@ -66,6 +65,7 @@ library:
     - text-short
     - time
     - unordered-containers
+    - vector
   ghc-options:
     - -Wall
     - -Wno-missing-signatures

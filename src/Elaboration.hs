@@ -22,8 +22,7 @@ Things to perhaps benchmark:
 module Elaboration where
 
 import qualified Data.HashMap.Strict as HM
-import qualified Data.Array.Dynamic as A
-import qualified Data.Array.Dynamic.Unlifted as UA
+import qualified Data.Vector.Unboxed
 import Text.Printf
 
 import Control.Exception
@@ -637,7 +636,7 @@ renderElabOutput ntbl = do
   es <- A.foldr'  (:) [] top
   ms <- UA.foldr' (:) [] metas
 
-  let go :: (Int, TopEntry) -> A.Array MetaEntry -> IO [String]
+  let go :: (Int, TopEntry) -> Vector MetaEntry -> IO [String]
       go (i, TopEntry (Posed _ n)  def (EntryTy a _)) ms = do
         ms <- A.foldr' (:) [] ms
         let metaBlock = filter (not . null) $ map
