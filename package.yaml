@@ -66,6 +66,8 @@ library:
     - time
     - unordered-containers
     - vector
+    - primdata
+    - dynamic-array
   ghc-options:
     - -Wall
     - -Wno-missing-signatures
