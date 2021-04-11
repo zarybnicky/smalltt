@@ -1,0 +1,10 @@
+resolver: lts-16.19
+
+packages:
+- .
+
+extra-deps:
+  - ../primdata
+
+ghc-options:
+    "$everything": -split-sections
