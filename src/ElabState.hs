@@ -1,8 +1,8 @@
 
 module ElabState where
 
-import qualified Data.Array.Dynamic as A
-import qualified Data.Array.Dynamic.Unlifted as UA
+import qualified Data.Array.Dynamic.L as A
+import qualified Data.Array.Dynamic.U as UA
 import Text.Megaparsec.Pos
 import Data.IORef
 

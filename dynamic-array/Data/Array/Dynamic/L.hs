@@ -16,14 +16,14 @@ module Data.Array.Dynamic.L  (
   , isEmpty
   -- , foldl'
   -- , foldlIx'
-  -- , foldr'
+  , foldr'
   -- , foldrIx'
   -- , Data.Array.Dynamic.any
   -- , Data.Array.Dynamic.all
   -- , allIx
   -- , anyIx
-  -- , forM_
-  -- , forMIx_
+  , forM_
+  , forMIx_
   ) where
 
 import Data.Unlifted
@@ -167,15 +167,15 @@ show (Array r) = do
 --   go 0 b
 -- {-# inline foldlIx' #-}
 
--- foldr' :: (a -> b -> b) -> b -> Array a -> IO b
--- foldr' f b = \arr -> do
---   s <- size arr
---   let go i b | i == (-1) = pure b
---              | otherwise = do
---                  a <- unsafeRead arr i
---                  go (i - 1) $! f a b
---   go (s - 1) b
--- {-# inline foldr' #-}
+foldr' :: (a -> b -> b) -> b -> Array a -> IO b
+foldr' f b = \arr -> do
+  s <- size arr
+  let go i b | i == (-1) = pure b
+             | otherwise = do
+                 a <- unsafeRead arr i
+                 go (i - 1) $! f a b
+  go (s - 1) b
+{-# inline foldr' #-}
 
 -- foldrIx' :: (Int -> a -> b -> b) -> b -> Array a -> IO b
 -- foldrIx' f b = \arr -> do
@@ -204,16 +204,16 @@ show (Array r) = do
 -- allIx f = foldlIx' (\i b a -> f i a && b) True
 -- {-# inline allIx #-}
 
--- forM_ :: Array a -> (a -> IO b) -> IO ()
--- forM_ arr f = go (0 :: Int) where
---   go i = do
---     s <- size arr
---     if i == s then pure () else do {x <- unsafeRead arr i; f x; go (i + 1)}
--- {-# inline forM_ #-}
+forM_ :: Array a -> (a -> IO b) -> IO ()
+forM_ arr f = go (0 :: Int) where
+  go i = do
+    s <- size arr
+    if i == s then pure () else do {x <- unsafeRead arr i; f x; go (i + 1)}
+{-# inline forM_ #-}
 
--- forMIx_ :: Array a -> (Int -> a -> IO b) -> IO ()
--- forMIx_ arr f = go (0 :: Int) where
---   go i = do
---     s <- size arr
---     if i == s then pure () else do {x <- unsafeRead arr i; f i x; go (i + 1)}
--- {-# inline forMIx_ #-}
+forMIx_ :: Array a -> (Int -> a -> IO b) -> IO ()
+forMIx_ arr f = go (0 :: Int) where
+  go i = do
+    s <- size arr
+    if i == s then pure () else do {x <- unsafeRead arr i; f i x; go (i + 1)}
+{-# inline forMIx_ #-}

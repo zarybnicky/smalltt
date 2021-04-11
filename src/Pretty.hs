@@ -16,7 +16,7 @@ module Pretty (
   , showGluedCxt
   ) where
 
-import qualified Data.Array.Dynamic as A
+import qualified Data.Array.Dynamic.L as A
 import qualified Data.Text.Short as T
 import qualified Data.HashMap.Strict as HM
 

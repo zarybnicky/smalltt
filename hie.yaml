@@ -6,3 +6,5 @@ cradle:
       component: "exe:smalltt"
     - path: "./dynamic-array"
       component: "lib:dynamic-array"
+    - path: "./primdata"
+      component: "lib:primdata"

@@ -3,8 +3,8 @@ module Simplify where
 
 import Control.Exception
 import Control.Monad
-import qualified Data.Array.Dynamic as AD
-import qualified Data.Array.Dynamic.Unlifted as ADU
+import qualified Data.Array.Dynamic.L as AD
+import qualified Data.Array.Dynamic.U as ADU
 import qualified Data.Primitive.PrimArray as PA
 
 import Common

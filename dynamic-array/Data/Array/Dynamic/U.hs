@@ -15,7 +15,7 @@ module Data.Array.Dynamic.U  (
   , isEmpty
   -- , foldl'
   -- , foldlIx'
-  -- , foldr'
+  , foldr'
   -- , foldrIx'
   -- , Data.Array.Dynamic.any
   -- , Data.Array.Dynamic.all
@@ -149,15 +149,15 @@ show (Array r) = do
 --   go 0 b
 -- {-# inline foldlIx' #-}
 
--- foldr' :: (a -> b -> b) -> b -> Array a -> IO b
--- foldr' f b = \arr -> do
---   s <- size arr
---   let go i b | i == (-1) = pure b
---              | otherwise = do
---                  a <- unsafeRead arr i
---                  go (i - 1) $! f a b
---   go (s - 1) b
--- {-# inline foldr' #-}
+foldr' :: Unlifted a => (a -> b -> b) -> b -> Array a -> IO b
+foldr' f b = \arr -> do
+  s <- size arr
+  let go i b | i == (-1) = pure b
+             | otherwise = do
+                 a <- unsafeRead arr i
+                 go (i - 1) $! f a b
+  go (s - 1) b
+{-# inline foldr' #-}
 
 -- foldrIx' :: (Int -> a -> b -> b) -> b -> Array a -> IO b
 -- foldrIx' f b = \arr -> do
