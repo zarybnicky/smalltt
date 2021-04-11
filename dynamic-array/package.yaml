@@ -25,7 +25,6 @@ ghc-options:
   - -Wno-unused-matches
   - -Wno-partial-type-signatures
   - -O2
-  - -fllvm
 
 library:
   source-dirs: .
