@@ -23,7 +23,6 @@ module Elaboration where
 
 import qualified Data.HashMap.Strict as HM
 import qualified Data.Array.Dynamic.L as A
-import qualified Data.Array.Dynamic.U as UA
 import Text.Printf
 
 import Control.Exception
@@ -90,7 +89,7 @@ isUnfoldable t = go t where
 
 registerSolution :: Meta -> Tm -> IO ()
 registerSolution (Meta i j) t = do
-  arr <- UA.unsafeRead metas i
+  arr <- A.unsafeRead metas i
   pos <- getPos
   A.unsafeWrite arr j (MESolved (gvEval ENil ENil t) (isUnfoldable t) t pos)
 {-# inline registerSolution #-}
@@ -436,8 +435,8 @@ gEval' cxt t = gEval (_gVals cxt) (_vVals cxt) t
 
 newMeta :: Cxt -> IO Tm
 newMeta cxt = do
-  i     <- subtract 1 <$> UA.size metas
-  arr   <- UA.unsafeRead metas i
+  i     <- subtract 1 <$> A.size metas
+  arr   <- A.unsafeRead metas i
   j     <- A.size arr
   pos   <- getPos
   A.push arr (MEUnsolved pos)
@@ -590,7 +589,7 @@ infer ins cxt (Posed pos t) = updPos pos >> case t of
 
 checkTopEntry :: NameTable -> P.TopEntry -> IO NameTable
 checkTopEntry ntbl e = do
-  UA.push metas =<< A.empty
+  A.push metas =<< A.empty
   let cxt = initCxt ntbl
   x <- A.size top
   case e of
@@ -635,7 +634,7 @@ checkProgram es = reset >> go mempty es where
 renderElabOutput :: NameTable -> IO String
 renderElabOutput ntbl = do
   es <- A.foldr'  (:) [] top
-  ms <- UA.foldr' (:) [] metas
+  ms <- A.foldr' (:) [] metas
 
   let go :: (Int, TopEntry) -> A.Array MetaEntry -> IO [String]
       go (i, TopEntry (Posed _ n)  def (EntryTy a _)) ms = do

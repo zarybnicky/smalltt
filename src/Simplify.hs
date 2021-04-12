@@ -4,7 +4,6 @@ module Simplify where
 import Control.Exception
 import Control.Monad
 import qualified Data.Array.Dynamic.L as AD
-import qualified Data.Array.Dynamic.U as ADU
 import qualified Data.Primitive.PrimArray as PA
 
 import Common
@@ -54,9 +53,9 @@ inline0 = inline 0 ENil
 -- | Inline metas in the current meta block. We throw error on unsolved metas.
 simplifyMetaBlock :: Cxt -> IO ()
 simplifyMetaBlock cxt = do
-  block     <- ADU.last metas
+  block     <- AD.last metas
   blockSize <- AD.size block
-  blockIx   <- subtract 1 <$> ADU.size metas
+  blockIx   <- subtract 1 <$> AD.size metas
 
   -- 1. Inline already inlinable metas in block, check for unsolved metas
   AD.forMIx_ block $ \j -> \case

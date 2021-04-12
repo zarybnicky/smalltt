@@ -8,7 +8,9 @@ import Common
 import Syntax
 
 data Spine a = SNil | SAppI (Spine a) ~a | SAppE (Spine a) ~a
+  deriving (Show)
 data Env a = ENil | EDef (Env a) ~a | ESkip (Env a)
+  deriving (Show)
 
 envLength :: Env a -> Int
 envLength = go 0 where
@@ -24,9 +26,12 @@ type VTy    = Val
 type GTy    = Glued
 type GVTy   = GV
 
-data GV  = GV ~Glued ~Val
+data GV  = GV { gvG :: ~Glued, gvV :: ~Val }
+  deriving (Show)
 data GCl = GCl GEnv VEnv Tm
+  deriving (Show)
 data VCl = VCl VEnv Tm
+  deriving (Show)
 
 
 newtype Head = Head Int deriving (Eq, Ord)
@@ -61,6 +66,7 @@ data Val
   | VFun ~VTy ~VTy
   | VU
   | VIrrelevant
+  deriving (Show)
 
 data Glued
   = GNe Head GSpine VSpine
@@ -69,6 +75,7 @@ data Glued
   | GFun {-# unpack #-} GVTy {-# unpack #-} GVTy
   | GU
   | GIrrelevant
+  deriving (Show)
 
 pattern GLocal :: Ix -> Glued
 pattern GLocal x = GNe (HLocal x) SNil SNil

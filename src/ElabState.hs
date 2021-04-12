@@ -2,7 +2,6 @@
 module ElabState where
 
 import qualified Data.Array.Dynamic.L as A
-import qualified Data.Array.Dynamic.U as UA
 import Text.Megaparsec.Pos
 import Data.IORef
 
@@ -47,13 +46,13 @@ data MetaEntry
   = MEUnsolved SourcePos
   | MESolved {-# unpack #-} GV Unfoldable Tm SourcePos
 
-metas :: UA.Array (A.Array MetaEntry)
-metas = runIO UA.empty
+metas :: A.Array (A.Array MetaEntry)
+metas = runIO A.empty
 {-# noinline metas #-}
 
 lookupMetaIO :: Meta -> IO MetaEntry
 lookupMetaIO (Meta i j) = do
-  arr <- UA.unsafeRead metas i
+  arr <- A.unsafeRead metas i
   res <- A.unsafeRead arr j
   pure res
 {-# inline lookupMetaIO #-}
@@ -68,7 +67,7 @@ metaRigidity x = case lookupMeta x of MESolved{} -> Flex; _ -> Rigid
 
 writeMeta :: Meta -> MetaEntry -> IO ()
 writeMeta (Meta i j) e = do
-  arr <- UA.unsafeRead metas i
+  arr <- A.unsafeRead metas i
   A.unsafeWrite arr j e
 {-# inline writeMeta #-}
 
@@ -110,5 +109,5 @@ withPos pos ma = do
 reset :: IO ()
 reset = do
   A.clear top
-  UA.clear metas
+  A.clear metas
   writeIORef currPos (initialPos "")
