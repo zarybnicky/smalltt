@@ -2,6 +2,7 @@
 *.hi
 *.o
 ./dist
+dist-newstyle/
 *#
 TAGS
 .stack-work/
@@ -10,3 +11,4 @@ TAGS
 *.vo
 *.aux
 *.glob
+.direnv/
